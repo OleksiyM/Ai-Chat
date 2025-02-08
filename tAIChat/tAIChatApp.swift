@@ -34,11 +34,30 @@ struct tAIChatApp: App {
             }
         }
         
-        MenuBarExtra("Settings", systemImage: "gear") {
-            Button("Settings") {
-                showSettings.toggle()
+        MenuBarExtra("tAIChat", systemImage: "bubble.left.and.bubble.right.fill") {
+            VStack {
+                Button("Show/Hide Window") {
+                    if let window = NSApp.windows.first {
+                        if window.isVisible {
+                            window.orderOut(nil)
+                        } else {
+                            window.makeKeyAndOrderFront(nil)
+                            NSApp.activate(ignoringOtherApps: true)
+                        }
+                    }
+                }
+                
+                Divider()
+                
+                Button("Settings") {
+                    if let window = NSApp.windows.first {
+                        window.makeKeyAndOrderFront(nil)
+                        NSApp.activate(ignoringOtherApps: true)
+                        showSettings = true
+                    }
+                }
+                .keyboardShortcut(",", modifiers: .command)
             }
-            .keyboardShortcut(",", modifiers: .command)
         }
     }
 }
